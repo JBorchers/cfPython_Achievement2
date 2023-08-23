@@ -3,8 +3,7 @@
 <details>
 <summary><h2>Exercise 2.1: Getting Started with Django</h2></summary>
  
-While the previous achievement built a command-line version of a recipe app, this achievement will redevelop the app using the Django framework.
-This exercise explores the basics and installation process of Django.
+While the [previous achievement](https://github.com/JBorchers/cfPython_Achievement1/tree/main) built a command-line version of a recipe app, this achievement will redevelop the app using the Django framework.
 
 Django is a high-level Python web framework that simplifies the process of building web applications by providing a set of tools and conventions for various web development tasks. It follows the Model-View-Controller (MVC) architectural pattern, which Django refers to as Model-View-Template (MVT):
 
