@@ -1,0 +1,52 @@
+Exercise 2.1: Getting Started with Django
+
+
+
+Reflection Questions
+
+1.	Suppose you’re a web developer in a company and need to decide if you’ll use vanilla (plain) Python for a project, or a framework like Django instead. What are the advantages and drawbacks of each?
+
+
+Vanilla (plain) Python:
+
+Advantages
+  - flexibility, complete freedome to build the application exactly how you want without predefined structure
+  - lightweight, no overhead from a framework, which would be suitable for a smaller projects
+  - little learning curve if you're already familiar with Python
+
+Drawbacks
+  - not very scalable as projects grow
+  - potentially time consuming, as you'd need to handle many aspects yourself, such as setting up the server, managing databases, and implementing security measures
+
+
+Django:
+
+Advantages
+  - rapid development, as pre-built components are provided for common tasks, such as user authentiation, DB management, and form handling
+  - active community, extensive documentation, and a wide range of third-party packages can help speed up development troubleshooting
+
+Disadvantages
+  - learning curve, if you're not already familiar with the framework
+  - less flexibility, as it comes with a lot of pre-built tools and some conventions and restrictions that might limit flexibility in certain cases
+  - some overhead in using a framework, as it might include features you don't need for a specific project
+
+
+
+
+2.	In your own words, what is the most significant advantage of Model View Template (MVT) architecture over Model View Controller (MVC) architecture?
+
+A significant advantage of the Model View Template (MVT) architecture over the traditional Model View Controller (MVC) architecture lies in the distinct separation of the application's tasks without getting mixed up with each other. In other words, MVT pays a lot of attention to making sure the design and appearance of the app (the template) are kept separate from the data and technical attributes (the model and view). This separation keeps things organized and easier to work on. In contrast, in the MVC architecture, the view often includes both presentation logic and some level of backend interaction, which can lead to more complex and coupled code.
+
+
+
+
+3.	Now that you’ve had an introduction to the Django framework, write down three goals you have for yourself and your learning process during this Achievement. You can reflect on the following questions if it helps:
+●	What do you want to learn about Django? 
+●	What do you want to get out of this Achievement? 
+●	Where or what do you see yourself working on after you complete this Achievement?
+
+  - Learn how to create and manage data models, build views that handle user requests, and design a template for displaying information to the user
+  
+  - Gain proficiency in Django's framework to perform CRUD operations, allowing data to be created, read, updated, and deleted
+
+  - Learn the ins and outs of using Django's features (and likely additonal third party tools) to create an efficient, easy-to-use, and aesthetically pleasing user interface.
