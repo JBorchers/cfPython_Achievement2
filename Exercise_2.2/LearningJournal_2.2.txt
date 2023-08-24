@@ -1,0 +1,27 @@
+Exercise 2.2: Django Project Set Up
+
+Reflection Questions
+
+1.	Suppose you’re in an interview. The interviewer gives you their company’s website as an example, asking you to convert the website and its different parts into Django terms. How would you proceed? For this question, you can think about your dream company and look at their website for reference. 
+(Hint: In the Exercise, you saw the example of the CareerFoundry website in the Project and Apps section.)
+
+For this example, I'm imagining a website that sells outdoor gear. In Django terms, the entire website can be considered the project. Inside the project are individual models, or apps, such as customer login, available products, and a newsletters. Perhaps the company has a second website that is made for season-specific merchandise and events for local customers. The apps can be reused in this separate site as this site may also need a login and available products feature, and a completely different app for upcoming events.
+
+
+
+2.	In your own words, describe the steps you would take to deploy a basic Django application locally on your system. 
+
+Step 1 - Run migrations. This step creates the necessary DB tables for your project to initiate the backend environment. In Windows, run `py manage.py migrate`.
+
+Step 2 - Run the server. This step deploys the project to localhost. The developer can access this application through their browser from the weblink that is provided after running this step. You can create a super user that will be able to perform all CRUD operations (create, read, update, delete).
+
+
+
+3.	Do some research about the Django admin site and write down how you’d use it during your web application development.
+
+Using the Django admin site can significantly simplify the development and management of the web application. It provides an out-of-the-box user interface for managing the application's data, which is especially useful during development and for non-technical users.
+
+Managing data - I'd be able to use the admin interface to add, edit, and delete data. I could have a user-friendly form for adding new recipe entries, updating existing ones, and even searching for specific records.
+
+Permissions and Access - (assuming there would be multiple users) I could define user groups, assign specific permissions to different user roles, and control who can perform any of the CRUD operations.
+
