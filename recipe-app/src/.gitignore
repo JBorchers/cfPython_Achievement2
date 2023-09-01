@@ -1,0 +1,9 @@
+# text backup files
+*.bak
+
+# DB
+*.sqlite3
+
+*migrations*
+
+*pycache*
