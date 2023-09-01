@@ -1,7 +1,7 @@
 # cfPython_Achievement2
  
 <details>
-<summary><h2>Exercise 2.1: Getting Started with Django</h2></summary>
+<summary><h2>Creating the Recipe App with Django</h2></summary>
  
 While the [previous achievement](https://github.com/JBorchers/cfPython_Achievement1/tree/main) built a command-line version of a recipe app, this achievement will redevelop the app using the Django framework.
 
@@ -20,8 +20,29 @@ Django is a high-level Python web framework that simplifies the process of build
 
 
 <details>
-<summary><h2>Exercise 2.2: Django Project Set Up</h2></summary>
+<summary><h2>Backend Project Set Up</h2></summary>
 
+## MODELS
+
+Here we are working with the **M** part of Django's **MVT** architecture.
+The app is composed of four main entities:
+
+- `Users`
+- `Recipes`
+- `Ingredients`
+- `RecipesIngredients`
+
+_Users_ :<br>This app handles user authentication, registration, login, and profile management.<br><br>
+_Recipes_ :<br>Each recipe is listed for the user, displaying recipe name, cooking time, level of difficulty, and ingredients.<br><br>
+_Ingredients_ :<br>All ingredients are stored in this app amongst all recipes.<br><br>
+_RecipesIngredients_ :<br>This app handles the many-to-many relationship between recipes and ingredients. This is where ingredients are added to a selected recipe to then be appended to the recipe itself and stored in the `ingredients` app.<br><br>
+
+
+
+</details>
+
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 
