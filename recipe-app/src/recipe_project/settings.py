@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # recipe-app related apps
-    # ingredients to be before recipes
     'ingredients',
     'recipes',
     'recipesingredients'
