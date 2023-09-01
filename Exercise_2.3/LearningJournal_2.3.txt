@@ -1,0 +1,14 @@
+Exercise 2.3: Django Models
+
+Reflection Questions
+
+1.	Do some research on Django models. In your own words, write down how Django models work and what their benefits are.
+
+Django models are a fundamental part of the Django web framework and provide an abstraction for defining the structure and behavior of your application's data. They simplify database management, improve code organization, and enhance development productivity by providing a Pythonic way to define, query, and interact with one's data.
+
+
+
+
+2.	In your own words, explain why it is crucial to write test cases from the beginning of a project. You can take an example project to explain your answer.
+
+writing test cases from the beginning of a project is a proactive approach that pays off in terms of code quality, early issue detection, collaboration, and long-term project success. It reduces risks, enhances maintainability, and ultimately leads to a more reliable and valuable software product.
