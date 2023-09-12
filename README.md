@@ -52,7 +52,9 @@ In a Django project, "views" and "templates" are fundamental components that wor
 
 Views handle the application logic and process requests, while templates define the structure and presentation of the resulting web pages. Together, they enable Django to build dynamic and data-driven web applications.
 
-The front-end of the `Recipes` application will be build using these views and templates.
+The front-end of the **Recipes** application will be build using these views and templates.
+
+
 
 
 
