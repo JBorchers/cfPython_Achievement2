@@ -146,7 +146,7 @@ In the terminal, activate your virtual environment. Run the server by typing `py
 
 Copy the link provided by running the server and paste it into the browser. The custom webpage should now be loaded.
 
-<img src="./Exercise_2.4/welcome.png" alt="welcome page" width="50%">
+<img src="./Exercise_2.4/screenshots/welcome.png" alt="welcome page" width="50%">
 
 </details>
 
