@@ -54,13 +54,97 @@ Views handle the application logic and process requests, while templates define 
 
 The front-end of the **Recipes** application will be build using these views and templates.
 
+### Create a `View`
 
+Create a `view.py` file under the desired app. Specify a `recipes_home.html` template, that you will create in the next step. Be sure to include the proper imports.
 
+```
+# src > recipes > views.py
+from django.shortcuts import render
 
+# Create your views here.
+def recipes_home(request):
+    return render(request, "recipes/recipes_home.html")
+```
 
+### Create a `Template`
 
+Create a `templates` folder under the same app (`recipes`) as the `views.py`. <br>
+Create another folder of the same name, `recipes`. <br>
+Create an HTML file to define the main page template. Call it `recipes_home.html`.
+Design welcome page and save it. <br>
 
+```
+# src > recipes > templates > recipes_home.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipes</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to your personalized Recipes App!</h1>
+    <h3>Let's get cookin!</h3>
+    <ul>
+      {% for recipe in recipes %}
+      <li>
+        <a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="/recipes/new">Add a new recipe</a>
+  </body>
+</html>
+```
 
+### Map view to URL
+
+In order for the welcome page to appear when the site is first loaded, map the template to a `urls.py` file under the `recipes` app. <br>
+Specify the `path` to connect the route corresponding to “http://127.0.0.1:8000/” with the view specified by `recipes/views.py`. <br>
+Ensure the proper packages are imported.
+
+```
+# src > recipes > urls.py
+from django.urls import path
+from .views import recipes_home
+
+app_name = "recipes"
+
+urlpatterns = [
+    path("", recipes_home, name="recipes_home"),
+]
+```
+
+Next, register the view to the `urlpatterns` in the main project folder's `urls.py`.
+```
+# src > recipe_project > urls.py
+from django.contrib import admin
+from django.urls import path
+from django.urls import include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("recipes.urls"))
+]
+```
+
+### Run server
+
+In the terminal, activate your virtual environment. Run the server by typing `python manage.py runserver`
+
+### Load site in browser
+
+Copy the link provided by running the server and paste it into the browser. The custom webpage should now be loaded.
 
 
 </details>
