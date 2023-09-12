@@ -45,6 +45,20 @@ _RecipesIngredients_ :<br>This app handles the many-to-many relationship between
 <!--------------------------------------------------------------------------------------------------------------------------------------------->
 
 
+<details>
+<summary><h2>Django Project Views and Templates</h2></summary>
+
+In a Django project, "views" and "templates" are fundamental components that work together to handle the presentation logic and rendering of web pages. They are key elements of the Model-View-Controller (MVC) architectural pattern used in Django.
+
+Views handle the application logic and process requests, while templates define the structure and presentation of the resulting web pages. Together, they enable Django to build dynamic and data-driven web applications.
+
+The front-end of the `Recipes` application will be build using these views and templates.
+
+
+
+
+
+
 
 
 </details>
