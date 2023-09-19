@@ -1,30 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recipes</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Poppins:400,700" rel="stylesheet">
     <style>
       body {
+        font-family: 'Roboto';
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
         height: 100vh;
+        background-image: url("{% static 'recipes/images/home_background2.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        text-align: right; /* Right-align the container */
+        /* color: rgb(123, 174, 132); /* Text color */
+        color: rgb(255, 255, 255);
+      }
+
+      /* Style for the text */
+      .text {
+        font-size: 13vw;
+        text-shadow: 8px 8px 8px rgba(0, 0, 0, 0.963); /* Add a subtle shadow to text */
+        text-align: left; /* Right-align the text */
+        margin-right: 50px; /* Adjust the margin to move the text more to the right */
+        line-height: 0.90;
       }
     </style>
+
   </head>
   <body>
-    <h1>Welcome to your personalized Recipes App!</h1>
-    <h3>Let's get cookin!</h3>
-    <ul>
-      {% for recipe in recipes %}
-      <li>
-        <a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-    <a href="/recipes/new">Add a new recipe</a>
+    <div class="text">
+      MY<br>RECIPE<br>BOOK
+    </div>
   </body>
 </html>
-
