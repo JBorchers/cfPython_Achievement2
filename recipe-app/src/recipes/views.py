@@ -9,3 +9,7 @@ def recipes_home(request):
 class RecipesListView(ListView):
     model = Recipe
     template_name = "recipes/recipes_list.html"
+
+class RecipesDetailView(DetailView):
+    model = Recipe
+    template_name = "recipes/details.html"
