@@ -1,15 +1,120 @@
-<h1>Recipes</h1>        {% comment%} HTML tag for heading  {% endcomment%}
+{% load static %}
 
-<table border="1" cellpadding="5" cellspacing = "5">
-   <tr> {% comment%}  the <tr> tag adds a new row   {% endcomment%}
-       <td>Books' Titles</td>   {% comment%} the <td> tag adds a column  {% endcomment%}       <td>Recipe Images</td>
-   </tr>
-   {% for object in object_list %} {% comment%} now go through the list element-by-element  {% endcomment%}
-   <tr>
-       <td><a href = "{{object.get_absolute_url}}">>
-         {{object.name}}
-       </a></td> {% comment%} print the name of book  {% endcomment%}
-       <td><img src="{{object.pic.url}}" width="150" height="150" /></td> 
-   </tr>
-   {% endfor %}
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Fuggles&family=Mooli&family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="{% url 'recipes:recipes_home' %}" class="back-button">Back</a>
+    <div class="page-title">Recipes</div>
+
+    <div class="recipe-list">
+        {% for object in object_list %}
+        <div class="recipe-item">
+            <a href="{{ object.get_absolute_url }}">
+                <div class="recipe-title">{{ object.name }}</div>
+                <img src="{{ object.pic.url }}" alt="{{ object.name }}" class="recipe-image">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <style>
+        body {
+            background-image: url("{% static 'recipes/images/home_background2.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 20px;
+            color: white; /* Text color */
+        }
+
+        .page-title {
+            font-size: 11vw;
+            color: white;
+            text-shadow: 8px 8px 8px rgba(0, 0, 0, 0.963);
+            font-family: 'Fuggles', cursive;
+        }
+
+        .recipe-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .recipe-item {
+            background-color: rgba(255, 255, 255, 0.25);
+            border: 1px solid #444; /* Dark border color */
+            border-radius: 8px;
+            outline: 1px solid transparent;
+            outline-color: rgba(255, 255, 255, .5);
+            outline-offset: -7px;
+            margin: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            transition: transform 0.2s;
+        }
+
+        .recipe-title {
+            font-family: 'Roboto'; /* Change the font to 'Roboto' or another font */
+            text-transform: uppercase;
+            text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.963);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .recipe-image {
+            width: 70%;
+            height: auto;
+            max-height: 200px;
+            margin-bottom: 10px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .recipe-item a {
+            text-decoration: none;
+            color: #fff; /* Link color */
+            
+        }
+
+        .recipe-item:hover {
+            transform: scale(1.05); /* Slightly larger scale (105%) */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button {
+            position: absolute;
+            font-family: 'Roboto';
+            font-size: 24px;
+            text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.963);
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            top: 20px; /* Adjust the top distance from the top of the page */
+            left: 20px; /* Adjust the left distance from the left of the page */
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333; /* Dark button background color */
+            color: #fff; /* Button text color */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #555; /* Darker background color on hover */
+        }
+
+    </style>
+</body>
+</html>
