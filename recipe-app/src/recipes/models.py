@@ -12,14 +12,17 @@ class Recipe(models.Model):
     def calc_difficulty(self):
         num_ingredients = self.ingredients.count()
 
-        if self.cooking_time < 10 and num_ingredients < 4:
-            return "Easy"
-        elif self.cooking_time < 10 and num_ingredients >= 4:
-            return "Medium"
-        elif self.cooking_time >= 10 and num_ingredients < 4:
-            return "Intermediate"
+        if self.cooking_time < 10:
+            if num_ingredients < 4:
+                return "Easy"
+            else:
+                return "Medium"
         else:
-            return "Hard"
+            if num_ingredients < 4:
+                return "Intermediate"
+            else:
+                return "Hard"
+            
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
