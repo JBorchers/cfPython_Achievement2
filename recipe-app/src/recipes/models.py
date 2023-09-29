@@ -7,7 +7,7 @@ class Recipe(models.Model):
     description = models.TextField(default="this recipe doesn't have a description")
     difficulty = models.CharField(max_length=20, default="N/A")
     ingredients = models.ManyToManyField('ingredients.Ingredient', through='recipesingredients.RecipeIngredient', related_name='recipes')
-    pic = models.ImageField(upload_to='recipes', default='no_picture.jpg') # default stored in src/media
+    pic = models.ImageField(upload_to='recipes', default='no_picture.png') # default stored in src/media
 
     def calc_difficulty(self):
         num_ingredients = self.ingredients.count()
