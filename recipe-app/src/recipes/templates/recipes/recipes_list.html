@@ -30,9 +30,10 @@
             background-image: url("{% static 'recipes/images/home_background2.jpg' %}");
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             text-align: center;
             padding: 20px;
-            color: white; /* Text color */
+            color: white;
         }
 
         .page-title {
@@ -50,7 +51,7 @@
 
         .recipe-item {
             background-color: rgba(0, 0, 0, 0.6);
-            border: 1px solid #444; /* Dark border color */
+            border: 1px solid #444;
             border-radius: 8px;
             outline: 1px solid transparent;
             outline-color: rgba(255, 255, 255, .3);
@@ -63,7 +64,7 @@
         }
 
         .recipe-title {
-            font-family: 'Roboto'; /* Change the font to 'Roboto' or another font */
+            font-family: 'Roboto';
             text-transform: uppercase;
             text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.963);
             font-size: 24px;
@@ -83,12 +84,12 @@
 
         .recipe-item a {
             text-decoration: none;
-            color: #fff; /* Link color */
+            color: #fff;
             
         }
 
         .recipe-item:hover {
-            transform: scale(1.05); /* Slightly larger scale (105%) */
+            transform: scale(1.05);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
@@ -104,15 +105,15 @@
             left: 20px; /* Adjust the left distance from the left of the page */
             display: inline-block;
             padding: 10px 20px;
-            background-color: #333; /* Dark button background color */
-            color: #fff; /* Button text color */
+            background-color: #333; 
+            color: #fff; 
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
         }
 
         .back-button:hover {
-            background-color: #555; /* Darker background color on hover */
+            background-color: #555; 
         }
 
     </style>
