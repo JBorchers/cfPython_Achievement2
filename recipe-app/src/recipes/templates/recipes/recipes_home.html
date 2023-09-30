@@ -18,6 +18,7 @@
         background-image: url("{% static 'recipes/images/home_background2.jpg' %}");
         background-size: cover;
         background-position: center;
+        background-attachment: fixed;
         text-align: right;
         color: rgb(188, 188, 188);
       }
@@ -35,34 +36,33 @@
         color: rgb(188, 188, 188);
         text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.963);
         line-height: 0.6;
-        position: relative;
       }
 
       .recipe-link {
-          display: inline-block;
-          background-color: rgba(255, 255, 255, 0.2);
-          outline: 1px solid transparent;
-          outline-color: rgba(255, 255, 255, .5);
-          outline-offset: -10px;
-          color: rgb(255, 255, 255);
-          text-decoration: none;
-          font-family: 'Fuggles', cursive;
-          padding: 2% 3%;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, font-size 0.3s;
-          position: relative;
-          bottom: 0;
-          top: -110%; /* Relative top position */
-          left: -3%;
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.2);
+        outline: 1px solid transparent;
+        outline-color: rgba(255, 255, 255, .5);
+        outline-offset: -10px;
+        color: rgb(188, 188, 188);
+        text-decoration: none;
+        font-family: 'Fuggles', cursive;
+        padding: 2% 3%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, font-size 0.3s;
+        position: relative;
+        bottom: 0;
+        top: -110%; /* Relative top position */
+        left: -3%;
       }
 
       .recipe-link:hover {
-          background-color: rgba(255, 255, 255, 0.25);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
-          font-size: 103%;
-          outline: 1px solid transparent;
-          outline-color: rgba(255, 255, 255, .5);
-          outline-offset: -7px;
+        background-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+        font-size: 103%;
+        outline: 1px solid transparent;
+        outline-color: rgba(255, 255, 255, .5);
+        outline-offset: -7px;
       }
     </style>
 </head>

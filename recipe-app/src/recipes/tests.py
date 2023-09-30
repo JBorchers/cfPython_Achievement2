@@ -2,8 +2,6 @@ from django.test import TestCase
 from .models import Recipe
 from ingredients.models import Ingredient
 
-# Create your tests here.
-
 class RecipeModelTestCase(TestCase):
 
     def setUp(self):
