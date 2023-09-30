@@ -146,7 +146,96 @@ In the terminal, activate your virtual environment. Run the server by typing `py
 
 Copy the link provided by running the server and paste it into the browser. The custom webpage should now be loaded.
 
-<img src="./Exercise_2.4/screenshots/welcome.png" alt="welcome page" width="50%">
+
+</details>
+
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+<details>
+<summary><h2>Django MVT revisited</h2></summary>
+
+### 1.	Update models if needed
+   - I haven’t made any huge updates to my models. I still have three separate models: recipes, ingredients, and recipeingredients. Though I know there is a way to add the third model into one of the others, I found that the separation made things more organized and easier to manage.<br>
+   - A simple update I had made was automating the calc_difficulty field based on number of ingredients and cooking time. Previously I had not had the functionality in place and values had to be manually entered. I also created an option to add a description to each recipe. Both the difficulty and description are required fields, but if no values are added, they are auto-populated with “no description” or “N/A”. <br>
+
+
+### 2.	Adding records
+   - Collect the information/media that will be added to the database.
+   - Make entries in the Django admin panel for several recipes.
+
+_Recipe Entries_
+
+<img src="./Exercise_2.5/data_entries.png" width="50%"><img src="./Exercise_2.5/data_entries2.png" width="50%">
+
+### 3.	Develop a welcome page
+   - Take inspiration from existing applications. See <a src="./Exercise_2.5/learning_journal_2.5.doc">
+
+_Welcome page for 2.5_
+
+<img src="./Exercise_2.5/welcome.png" width="50%">
+
+
+### 3.	Generate a recipes list
+
+_Recipe App Sub-Page_
+
+<img src="./Exercise_2.5/recipes-overview.png" width="50%">
+
+
+### 5.	Add recipe details <br>
+
+_Recipe 1 example_
+
+<img src="./Exercise_2.5/recipe1.1.png" width="50%"><img src="./Exercise_2.5/recipe1.2.png" width="50%">
+
+_Recipe 2 example_
+
+<img src="./Exercise_2.5/recipe2.1.png" width="50%"><img src="./Exercise_2.5/recipe2.2.png" width="50%">
+
+
+### 6.	Repeat if necessary
+
+
+### 7.	Run tests
+
+```
+from django.test import TestCase
+from .models import Recipe
+from ingredients.models import Ingredient
+
+class RecipeModelTestCase(TestCase):
+
+    def setUp(self):
+        # Set up test data
+        self.ingredient = Ingredient.objects.create(name='Test Ingredient')
+        self.recipe = Recipe.objects.create(
+            name='Test Recipe',
+            cooking_time=5,
+            difficulty='Easy'
+        )
+        self.recipe.ingredients.add(self.ingredient)
+
+    def test_recipe_has_ingredient(self):
+        self.assertEqual(self.recipe.ingredients.count(), 1)
+        self.assertEqual(self.recipe.ingredients.first(), self.ingredient)
+
+    
+    def test_get_absolute_url(self):
+        self.recipe = Recipe.objects.create(
+            name='Test Recipe',
+            cooking_time=5,
+            difficulty='Easy'
+        )
+        self.assertEqual(self.recipe.get_absolute_url(), "/list/2")
+```
+
+_Test Results:_ <br>
+<img src="./Exercise_2.5/tests.png" width="50%">
+
+
+
 
 </details>
 
