@@ -170,7 +170,7 @@ _Recipe Entries_
 <img src="./Exercise_2.5/data_entries.png" width="50%"><img src="./Exercise_2.5/data_entries2.png" width="50%">
 
 ### 3.	Develop a welcome page
-   - Take inspiration from existing applications. See <a src="./Exercise_2.5/learning_journal_2.5.doc">
+   - Take inspiration from existing applications. See [Learning Journal](./Exercise_2.5/learning_journal_2.5.docx)
 
 _Welcome page for 2.5_
 
