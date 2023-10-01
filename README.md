@@ -170,7 +170,7 @@ _Recipe Entries_
 <img src="./Exercise_2.5/data_entries.png" width="50%"><img src="./Exercise_2.5/data_entries2.png" width="50%">
 
 ### 3.	Develop a welcome page
-   - Take inspiration from existing applications. See [Learning Journal](https://github.com/JBorchers/cfPython_Achievement2/blob/main/Exercise_2.5/learning_journal_2.5.pdf))
+   - Take inspiration from existing applications. See [Learning Journal](https://github.com/JBorchers/cfPython_Achievement2/blob/main/Exercise_2.5/learning_journal_2.5.pdf)
 
 _Welcome page for 2.5_
 
