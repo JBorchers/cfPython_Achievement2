@@ -3,7 +3,6 @@ from .forms import RecipeIngredientForm
 from recipes.models import Recipe
 from .models import RecipeIngredient
 
-# Create your views here.
 def add_ingredients(request, recipe_id):
     recipe = Recipe.objects.get(pk=recipe_id)
 

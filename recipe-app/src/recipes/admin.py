@@ -9,5 +9,5 @@ class RecipeAdmin(admin.ModelAdmin):
         return ", ".join([ingredient.name for ingredient in obj.ingredients.all()])
     display_ingredients.short_description = 'Ingredients'
 
-# Register your models here.
+
 admin.site.register(Recipe, RecipeAdmin)

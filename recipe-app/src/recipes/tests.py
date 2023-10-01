@@ -5,7 +5,6 @@ from ingredients.models import Ingredient
 class RecipeModelTestCase(TestCase):
 
     def setUp(self):
-        # Set up test data
         self.ingredient = Ingredient.objects.create(name='Test Ingredient')
         self.recipe = Recipe.objects.create(
             name='Test Recipe',
