@@ -241,3 +241,39 @@ _Test Results:_ <br>
 
 <!--------------------------------------------------------------------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+<details>
+<summary><h2>User Authentication in Django</h2></summary>
+
+### 1. Provide authentication
+- create a login view
+- creat a login template
+- register a view and map URL
+- add a "login" button on homepage that directs user to authentication form
+- redirect user to "Recipes List" page after successful login
+
+
+### 2. Protect views
+- identify pages that should be protected via authentication (recipes list, recipe details, profile view)
+- user should be redirected to login page if any of the other views are tried without prior authentication
+
+
+### 3. Implement logout
+- add logout button on each protected page
+- create a view for a successful logout (success.html)
+- add a login button on the success.html page
+
+
+### 4. Run server 
+- test user journey through the application
+
+
+
+
+
+
+</details>
+
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
