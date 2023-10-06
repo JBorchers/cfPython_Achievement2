@@ -52,7 +52,7 @@
         transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, font-size 0.3s;
         position: relative;
         bottom: 0;
-        top: -110%; /* Relative top position */
+        top: -110%;
         left: -3%;
       }
 
@@ -72,6 +72,9 @@
     </div>
     <div class="text_link">
         <a href="{% url 'recipes:recipes_list' %}" class="recipe-link">Start cookin'...</a>
+    </div>
+    <div class="text_link">
+        <br><a href="{% url 'login' %}" class="recipe-link">Login</a>
     </div>
 </body>
 </html>
