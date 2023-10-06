@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Fuggles&family=Mooli&family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="scrollbar">
     <div class="top-bar">
         <a href="{% url 'recipes:recipes_home' %}" class="back-button">Back</a>
         <a class="about-button">About</a>
@@ -42,10 +42,10 @@
 
         .page-title {
             font-size: 14vw;
-            color: rgb(188, 188, 188);
+            color: rgb(230, 230, 230);
             text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.963);
             font-family: 'Fuggles', cursive;
-            margin-top: -5px;
+            margin-top: 15px;
         }
 
         .recipe-list {
@@ -77,7 +77,7 @@
             margin-bottom: 10px;
             margin-top: 10px;
             letter-spacing: 2px;
-            color: rgb(188, 188, 188);
+            color: rgb(230, 230, 230);
         }
 
         .recipe-image {
@@ -168,7 +168,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.87);
             outline: 2px solid transparent;
             outline-color: rgba(255, 255, 255, .1);
             padding: 23px;
@@ -181,13 +181,6 @@
             width: 100%;
         }
 
-        .top-bar .page-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: rgb(188, 188, 188);
-        }
-
-        /* Adjust styles for buttons within the top bar */
         .top-bar a {
             text-decoration: none;
             color: #fff;
@@ -203,6 +196,19 @@
 
         .top-bar a:hover {
             background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px; /* Set the width of the scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: rgba(0, 0, 0, 0.3); /* Track background color */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgb(112, 112, 112); /* Thumb color */
+            border-radius: 10px; /* Rounded corners for the thumb */
         }
 
     </style>
