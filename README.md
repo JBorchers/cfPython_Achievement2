@@ -247,11 +247,110 @@ _Test Results:_ <br>
 <summary><h2>User Authentication in Django</h2></summary>
 
 ### 1. Provide authentication
-- create a login view
+- create a login view - ensure you have the correct imports
+```
+src/recipe_project/views.py
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
+
+def login_view(request):
+    form = AuthenticationForm(request, request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("recipes:recipes_list")
+        else:
+            # Add an error message to the form
+            form.add_error(None, "Invalid username or password. Please try again.")
+    
+    return render(request, "auth/login.html", {"form": form})
+
+```
 - creat a login template
+```
+# src/templates/auth/login.html
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+    # add styles
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <p class="login-title">Login</p>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="error-message">
+                <p class="error-text">Invalid username or password.<br>Please try again.</p>
+            </div>
+            {% endif %}
+            <div class="input-container">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-container">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+```
+  
 - register a view and map URL
+
+```
+# /src/recipe_project/urls.py
+
+from .views import login_view
+
+urlpatterns = [
+    path("login/", login_view, name="login"),
+]
+```
+
 - add a "login" button on homepage that directs user to authentication form
+
+```
+# src/recipes/templates/recipes/recipes_home.html
+
+<body>
+    <div class="container">
+        <p class="title">Welcome to Your Recipe Book</p>
+        <a href="{% url 'login' %}" class="login-button">Login to start cookin'</a>
+    </div>
+</body>
+```
+
 - redirect user to "Recipes List" page after successful login
+
+```
+# src/recipe_project/views.py
+
+if user is not None:
+    login(request, user)
+    messages.info(request, f"You are now logged in as {username}.")
+    return redirect("recipes:recipes_list")
+
+```
 
 
 ### 2. Protect views
