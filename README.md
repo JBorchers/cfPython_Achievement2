@@ -375,8 +375,17 @@ urlpatterns = [
 ### 4. Run server 
 - test user journey through the application
 
+<img src="./Exercise_2.6/usr_journey/step1.png" width="50%">
 
+<img src="./Exercise_2.6/usr_journey/step2_error.png" width="50%">
 
+<img src="./Exercise_2.6/usr_journey/step3.png" width="50%">
+
+<img src="./Exercise_2.6/usr_journey/step4.png" width="50%">
+
+<img src="./Exercise_2.6/usr_journey/step5.png" width="50%">
+
+<img src="./Exercise_2.6/usr_journey/step6.png" width="50%">
 
 
 
