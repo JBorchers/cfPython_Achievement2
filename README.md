@@ -375,25 +375,25 @@ urlpatterns = [
 ### 4. Run server 
 - test user journey through the application
 
-user enters homepage, clicks login button
+user enters homepage, clicks login button<br>
 <img src="./Exercise_2.6/usr_journey/step1.png" width="50%">
 
-user enters incorrect credentials
+user enters incorrect credentials<br>
 <img src="./Exercise_2.6/usr_journey/step2_error.png" width="50%">
 
-user enters correct credentials
+user enters correct credentials<br>
 <img src="./Exercise_2.6/usr_journey/step2.png" width="50%">
 
-user is directed to recipes list
+user is directed to recipes list<br>
 <img src="./Exercise_2.6/usr_journey/step3.png" width="50%">
 
-user looks at specific recipe
+user looks at specific recipe<br>
 <img src="./Exercise_2.6/usr_journey/step4.png" width="50%">
 
-user logs out
+user logs out<br>
 <img src="./Exercise_2.6/usr_journey/step5.png" width="50%">
 
-user can log back in
+user can log back in<br>
 <img src="./Exercise_2.6/usr_journey/step6.png" width="50%">
 
 
