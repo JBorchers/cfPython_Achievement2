@@ -275,45 +275,11 @@ def login_view(request):
 
 ```
 - creat a login template
-```
-# src/templates/auth/login.html
+  
+`src/templates/auth/login.html`
 
-{% load static %}
+<img src="./Exercise_2.6/login_template.png" width="50%">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-    # add styles
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <p class="login-title">Login</p>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            {% if form.errors %}
-            <div class="error-message">
-                <p class="error-text">Invalid username or password.<br>Please try again.</p>
-            </div>
-            {% endif %}
-            <div class="input-container">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-container">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="login-button">Login</button>
-        </form>
-    </div>
-</body>
-</html>
-```
   
 - register a view and map URL
 
@@ -339,6 +305,7 @@ urlpatterns = [
     </div>
 </body>
 ```
+<img src="./Exercise_2.6/login_homepage.png" width="50%">
 
 - redirect user to "Recipes List" page after successful login
 
@@ -354,14 +321,55 @@ if user is not None:
 
 
 ### 2. Protect views
-- identify pages that should be protected via authentication (recipes list, recipe details, profile view)
-- user should be redirected to login page if any of the other views are tried without prior authentication
+- identify pages that should be protected via authentication (recipes list, recipe details)
+- since these are class views, we will use `LoginRequiredMixin`
+
+```
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class RecipesListView(LoginRequiredMixin, ListView):
+    model = Recipe
+    template_name = "recipes/recipes_list.html"
+
+class RecipesDetailView(LoginRequiredMixin, DetailView):
+    model = Recipe
+    template_name = "recipes/details.html"
+```
+- user is now redirected to login page if either of these views are tried without prior authentication
 
 
 ### 3. Implement logout
 - add logout button on each protected page
+
+<img src="./Exercise_2.6/logout_button1.png" width="50%">
+
+<img src="./Exercise_2.6/logout_button2.png" width="50%">
+
+```
+src/recipes/templates/recipes/recipes_list.html
+src/recipes/templates/recipes/details.html
+
+<a href="{% url 'logout' %}" class="logout-button">Logout</a>
+```
+  
 - create a view for a successful logout (success.html)
 - add a login button on the success.html page
+
+```
+src/recipe_project/urls.py
+
+urlpatterns = [
+    path(
+        "success/",
+        TemplateView.as_view(template_name="recipes/success.html"),
+        name="success",
+    ),
+]
+```
+
+`src/recipes/templates/recipes/success.html`
+
+<img src="./Exercise_2.6/logout_success.png" width="50%">
 
 
 ### 4. Run server 
