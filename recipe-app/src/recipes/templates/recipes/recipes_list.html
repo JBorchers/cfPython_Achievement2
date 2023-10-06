@@ -11,9 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Fuggles&family=Mooli&family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-    <a href="{% url 'recipes:recipes_home' %}" class="back-button">Back</a>
-    <br>
-    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    <div class="top-bar">
+        <a href="{% url 'recipes:recipes_home' %}" class="back-button">Back</a>
+        <a class="about-button">About</a>
+        <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    </div>
     <div class="page-title">Recipes</div>
 
     <div class="recipe-list">
@@ -43,7 +45,7 @@
             color: rgb(188, 188, 188);
             text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.963);
             font-family: 'Fuggles', cursive;
-            margin-top: -30px;
+            margin-top: -5px;
         }
 
         .recipe-list {
@@ -89,7 +91,6 @@
         .recipe-item a {
             text-decoration: none;
             color: #fff;
-            
         }
 
         .recipe-item:hover {
@@ -100,17 +101,15 @@
         .back-button {
             position: fixed;
             font-family: 'Roboto';
-            font-size: 24px;
+            font-size: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.963);
             box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.5);
-            font-size: 24px;
             font-weight: bold;
             letter-spacing: 2px;
-            top: 20px;
+            top: 10px;
             left: 20px;
             display: inline-block;
             padding: 10px 20px;
-            background-color: #333; 
             color: rgb(188, 188, 188);
             text-decoration: none;
             border-radius: 5px;
@@ -124,17 +123,15 @@
         .logout-button {
             position: fixed;
             font-family: 'Roboto';
-            font-size: 24px;
+            font-size: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.963);
             box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.5);
-            font-size: 24px;
             font-weight: bold;
             letter-spacing: 2px;
-            top: 20px;
+            top: 10px;
             right: 20px;
             display: inline-block;
             padding: 10px 20px;
-            background-color: #333; 
             color: rgb(188, 188, 188);
             text-decoration: none;
             border-radius: 5px;
@@ -143,6 +140,69 @@
 
         .logout-button:hover {
             background-color: #555; 
+        }
+
+        .about-button {
+            position: fixed;
+            font-family: 'Roboto';
+            font-size: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.963);
+            box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+            letter-spacing: 2px;
+            top: 10px;
+            right: 130px;
+            display: inline-block;
+            padding: 10px 20px;
+            color: rgb(188, 188, 188);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .about-button:hover {
+            background-color: #555; 
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            outline: 2px solid transparent;
+            outline-color: rgba(255, 255, 255, .1);
+            padding: 23px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .top-bar .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: rgb(188, 188, 188);
+        }
+
+        /* Adjust styles for buttons within the top bar */
+        .top-bar a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 15px;
+            font-weight: bold;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .top-bar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
     </style>
