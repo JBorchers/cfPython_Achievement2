@@ -354,12 +354,30 @@ if user is not None:
 
 
 ### 2. Protect views
-- identify pages that should be protected via authentication (recipes list, recipe details, profile view)
-- user should be redirected to login page if any of the other views are tried without prior authentication
+- identify pages that should be protected via authentication (recipes list, recipe details)
+- since these are class views, we will use `LoginRequiredMixin`
+
+```
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class RecipesListView(LoginRequiredMixin, ListView):
+    model = Recipe
+    template_name = "recipes/recipes_list.html"
+
+class RecipesDetailView(LoginRequiredMixin, DetailView):
+    model = Recipe
+    template_name = "recipes/details.html"
+```
+- user is now redirected to login page if either of these views are tried without prior authentication
 
 
 ### 3. Implement logout
 - add logout button on each protected page
+
+```
+
+```
+  
 - create a view for a successful logout (success.html)
 - add a login button on the success.html page
 
