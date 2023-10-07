@@ -13,7 +13,7 @@
 <body class="scrollbar">
     <div class="top-bar">
         <a href="{% url 'recipes:recipes_home' %}" class="back-button">Back</a>
-        <a class="about-button">About</a>
+        <a href="{% url 'recipes:add_recipe' %}" class="about-button">Add Recipe</a>
         <a href="{% url 'logout' %}" class="logout-button">Logout</a>
     </div>
     <div class="page-title">Recipes</div>
