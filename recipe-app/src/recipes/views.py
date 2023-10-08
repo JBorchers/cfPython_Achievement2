@@ -36,7 +36,7 @@ def get_chart(chart_type, data, **kwargs):
     if chart_type == "#1":
         # Bar Chart
         plt.title("Cooking Time by Recipe", fontsize=20)
-        plt.bar(data["title"], data["cooking_time"])
+        plt.bar(data["name"], data["cooking_time"])
         plt.xlabel("Recipes", fontsize=16)
         plt.ylabel("Cooking Time (min)", fontsize=16)
     elif chart_type == "#2":
@@ -45,7 +45,7 @@ def get_chart(chart_type, data, **kwargs):
         labels = kwargs.get("labels")
         plt.pie(data["cooking_time"], labels=None, autopct="%1.1f%%")
         plt.legend(
-            data["title"],
+            data["name"],
             loc="upper right",
             bbox_to_anchor=(1.0, 1.0),
             fontsize=12,
@@ -53,7 +53,7 @@ def get_chart(chart_type, data, **kwargs):
     elif chart_type == "#3":
         # Line Chart
         plt.title("Cooking Time by Recipe", fontsize=20)
-        x_values = data["title"].to_numpy()  # Convert to numpy array
+        x_values = data["name"].to_numpy()  # Convert to numpy array
         y_values = data["cooking_time"].to_numpy()  # Convert to numpy array
         plt.plot(x_values, y_values)
         plt.xlabel("Recipes", fontsize=16)
@@ -84,7 +84,7 @@ class RecipesListView(LoginRequiredMixin, ListView):
         ingredients = self.request.GET.getlist("Ingredients")
 
         if recipe_name:
-            queryset = queryset.filter(title__icontains=recipe_name)
+            queryset = queryset.filter(name__icontains=recipe_name)
 
         if ingredients:
             ingredient_query = Q()
@@ -107,11 +107,11 @@ class RecipesListView(LoginRequiredMixin, ListView):
             # Generate and pass the chart paths to the context
             chart_type = self.request.GET.get("chart_type")
             if chart_type:
-                chart_data = {"title": df["title"], "cooking_time": df["cooking_time"]}
+                chart_data = {"name": df["name"], "cooking_time": df["cooking_time"]}
                 if chart_type == "#1":
-                    chart_data["labels"] = df["title"]
+                    chart_data["labels"] = df["name"]
                 elif chart_type == "#2":
-                    chart_data["labels"] = df["title"]
+                    chart_data["labels"] = df["name"]
                 else:
                     chart_data["labels"] = None
 
@@ -138,7 +138,7 @@ def export_recipes_csv(request):
     queryset = Recipe.objects.all()
 
     if recipe_name:
-        queryset = queryset.filter(title__icontains=recipe_name)
+        queryset = queryset.filter(name__icontains=recipe_name)
 
     if ingredients:
         for ingredient in ingredients:
@@ -175,7 +175,7 @@ def generate_chart(request):
     queryset = Recipe.objects.all()
 
     if recipe_name:
-        queryset = queryset.filter(title__icontains=recipe_name)
+        queryset = queryset.filter(name__icontains=recipe_name)
 
     if ingredients:
         for ingredient in ingredients:
@@ -196,12 +196,12 @@ def generate_chart(request):
     # Create the DataFrame from the list of dictionaries
     df = pd.DataFrame.from_records(recipe_data)
 
-    chart_data = {"title": df["title"], "cooking_time": df["cooking_time"]}
+    chart_data = {"name": df["name"], "cooking_time": df["cooking_time"]}
     if chart_type == "#1":
-        chart_data["labels"] = df["title"]
+        chart_data["labels"] = df["name"]
     elif chart_type == "#2":
-        # For Pie Chart, labels should be the recipe titles, and not the cooking times
-        chart_data["labels"] = df["title"]
+        # For Pie Chart, labels should be the recipe names, and not the cooking times
+        chart_data["labels"] = df["name"]
     else:
         chart_data["labels"] = None
 

@@ -262,22 +262,50 @@
 
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $("#clear-search").click(function() {
-                    // Clear the form fields
-                    $("#id_search_text").val("");
-                    $("#id_Recipe_Name").val("");
-                    $("#id_Ingredients").val([]);
-                    $("#id_chart_type").val("");  // Clear the chart_type field
+<script>
+    $(document).ready(function() {
+        // Function to update the chart image
+        function updateChartImage(chartData) {
+            var chartImage = chartData.chart_image;
+            document.getElementById("recipe-chart").src = "data:image/png;base64," + chartImage;
+        }
 
-                    // Clear the chart by setting an empty src attribute
-                    $("#recipe-chart").attr("src", "");
+        // Event handler for the Clear button
+        $("#clear-search").click(function() {
+            // Clear the form fields
+            $("#id_search_text").val("");
+            $("#id_Recipe_Name").val("");
+            $("#id_Ingredients").val([]);
+            $("#id_chart_type").val("");  // Clear the chart_type field
 
-                    // Submit the form to refresh the recipe list
-                    $("form").submit();
-                });
+            // Clear the chart by setting an empty src attribute
+            $("#recipe-chart").attr("src", "");
+
+            // Submit the form to refresh the recipe list
+            $("form").submit();
+        });
+
+        // Event handler for form submission
+        $("form").submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Perform an AJAX request to the generate-chart view
+            $.ajax({
+                url: "{% url 'recipes:generate_chart' %}",
+                type: "GET",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(data) {
+                    // Call the function to update the chart image
+                    updateChartImage(data);
+                },
+                error: function(error) {
+                    console.log("Error:", error);
+                }
             });
-        </script>
+        });
+    });
+</script>
+
 </body>
 </html>
