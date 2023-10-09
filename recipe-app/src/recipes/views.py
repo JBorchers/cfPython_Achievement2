@@ -259,6 +259,7 @@ def add_recipe(request):
                     print(f"New Ingredient Name: {new_ingredient_name}")
                     if new_ingredient_name:
                         ingredient, created = Ingredient.objects.get_or_create(name=new_ingredient_name)
+                        RecipeIngredient.objects.create(recipe=recipe, ingredient=ingredient)
 
                 messages.success(request, "Recipe added successfully.")
 
