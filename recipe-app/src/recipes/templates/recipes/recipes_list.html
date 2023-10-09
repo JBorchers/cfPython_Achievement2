@@ -28,10 +28,6 @@
     </div>
     <div class="page-title">Recipes</div>
 
-    <div class="chart-container">
-    <img id="recipe-chart" src="" alt="Recipe Chart">
-    </div>
-
     <div class="recipe-list">
         {% for object in object_list %}
         <div class="recipe-item">
@@ -41,6 +37,10 @@
             </a>
         </div>
         {% endfor %}
+    </div>
+
+    <div class="chart-container">
+    <img id="recipe-chart" src="" alt="Recipe Chart">
     </div>
 
     <style>
@@ -59,7 +59,7 @@
             color: rgb(230, 230, 230);
             text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.963);
             font-family: 'Fuggles', cursive;
-            margin-top: 15px;
+            margin-top: 90px;
         }
 
         .recipe-list {

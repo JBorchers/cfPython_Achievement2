@@ -220,6 +220,8 @@ class RecipesDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "recipe"
 
 
+logger = logging.getLogger(__name__)
+
 @login_required
 def add_recipe(request):
     IngredientFormSet = formset_factory(NewIngredientForm, extra=1, max_num=5)
@@ -230,10 +232,8 @@ def add_recipe(request):
 
         if form.is_valid() and formset.is_valid():
             try:
-                # 1. Save the recipe instance directly to get an ID
                 recipe = form.save(commit=False)
 
-                # 2. Calculate the difficulty based on total ingredients
                 selected_ingredients_count = len(form.cleaned_data["ingredients"])
                 new_ingredients_count = sum(
                     1
@@ -251,50 +251,33 @@ def add_recipe(request):
                 else:
                     recipe.difficulty = "Hard"
 
-                # 3. Now that difficulty is set, save the recipe again
                 recipe.save()
-                form.save_m2m()  # Needed because we used commit=False earlier
+                form.save_m2m()
 
-                # 4. Process the ingredients
                 for ingredient_form in formset:
-                    new_ingredient_name = ingredient_form.cleaned_data.get(
-                        "new_ingredient"
-                    )
-                    ingredient = None
-
+                    new_ingredient_name = ingredient_form.cleaned_data.get("new_ingredient")
+                    print(f"New Ingredient Name: {new_ingredient_name}")
                     if new_ingredient_name:
-                        ingredient, created = Ingredient.objects.get_or_create(
-                            name=new_ingredient_name
-                        )
-
-                    if ingredient:
-                        # Associate the ingredient with the recipe using the through model
-                        RecipeIngredient.objects.create(
-                            recipe=recipe, ingredient=ingredient
-                        )
+                        ingredient, created = Ingredient.objects.get_or_create(name=new_ingredient_name)
 
                 messages.success(request, "Recipe added successfully.")
 
-                # Check if the "Save & Add Another" button was pressed
                 if "save_and_add" in request.POST:
-                    return redirect(
-                        "recipes:add_recipe"
-                    )  # Redirect to the same "Add Recipe" page
+                    return redirect("recipes:add_recipe")
 
                 return redirect(recipe)
 
             except Exception as e:
-                print("Error while saving recipe:", str(e))
+                # Log detailed error information
+                logger.error("Error while saving recipe for user %s: %s", request.user.username, str(e))
                 messages.error(request, "Error while saving recipe. Please try again.")
 
         else:
-            print("Form errors:", form.errors)
-            print("Formset errors:")
+            # Log form and formset errors for debugging
+            logger.error("Form errors: %s", form.errors)
             for i, form in enumerate(formset):
-                print(f"Formset form {i+1} errors:", form.errors)
-            messages.error(
-                request, "Form validation failed. Please check the entered data."
-            )
+                logger.error("Formset form %d errors: %s", i + 1, form.errors)
+            messages.error(request, "Form validation failed. Please check the entered data.")
 
     else:
         form = RecipeForm()
