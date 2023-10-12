@@ -12,7 +12,7 @@ CHART_CHOICES = (
 class RecipeSearchForm(forms.Form):
     search_text = forms.CharField(
         required=False,
-        max_length=100,  # Adjust the max length as needed
+        max_length=100,
         label="Search",
         widget=forms.TextInput(
             attrs={"class": "form-item", "placeholder": "Enter a Recipe Name or Ingredient"}
@@ -24,6 +24,13 @@ class RecipeSearchForm(forms.Form):
         label="Ingredient(s)",
         widget=forms.SelectMultiple(attrs={"class": "form-item"}),
     )
+    selected_ingredient = forms.ModelChoiceField(
+        required=False,
+        queryset=Ingredient.objects.all(),
+        label="Select Ingredient",
+        empty_label="All Ingredients",
+        widget=forms.Select(attrs={"class": "form-item"}),
+    )
     chart_type = forms.ChoiceField(
         choices=CHART_CHOICES, widget=forms.Select(attrs={"class": "form-item"})
     )
@@ -32,10 +39,11 @@ class RecipeSearchForm(forms.Form):
         cleaned_data = super().clean()
         search_text = cleaned_data.get("search_text")
         ingredients = cleaned_data.get("Ingredients")
+        selected_ingredient = cleaned_data.get("selected_ingredient")
 
-        if not search_text and not ingredients:
+        if not search_text and not ingredients and not selected_ingredient:
             raise forms.ValidationError(
-                "Please enter a search term or select an ingredient."
+                "Please enter a search term, select an ingredient, or choose 'All Ingredients'."
             )
         return cleaned_data
 

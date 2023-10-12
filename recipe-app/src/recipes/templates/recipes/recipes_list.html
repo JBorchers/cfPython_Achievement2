@@ -9,25 +9,36 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Fuggles&family=Mooli&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
-<body class="scrollbar">
-     <div class="top-bar">
+<body>
+    <div class="scrollbar">
+    <div class="top-bar">
         <a href="{% url 'recipes:recipes_home' %}" class="back-button">Back</a>
         <a href="{% url 'recipes:add_recipe' %}" class="about-button">Add Recipe</a>
         <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    <!-- Search Form -->
+    <form action="" method="GET" class="search-form">
+      {% csrf_token %}
+      <div class="form-item">
+        {{ form.Recipe_Name.label_tag }} {{ form.Recipe_Name }}
+      </div>
+      <div class="form-item">
+        {{ form.Ingredients.label_tag }} {{ form.Ingredients }}
+      </div>
+      <div class="form-item">
+        {{ form.chart_type.label_tag }} {{ form.chart_type }}
+      </div>
+      <button type="submit">Search</button>
+      <button type="button" id="clear-search" class="clear-button">Clear</button>
 
-        <!-- Search form in the top-bar -->
-        <form method="get" action="{% url 'recipes:recipes_list' %}" class="search-form">
-            {{ form.search_text.label_tag }} {{ form.search_text }}
-            {{ form.Recipe_Name.label_tag }} {{ form.Recipe_Name }}
-            {{ form.Ingredients.label_tag }} {{ form.Ingredients }}
-            {{ form.chart_type.label_tag }} {{ form.chart_type }}
-            <button type="submit" class="btn btn-primary">Search</button>
-            <button type="button" id="clear-search" class="btn btn-secondary">Clear</button>
-        </form>
+    </form>
     </div>
     <div class="page-title">Recipes</div>
 
+    <!-- The list of recipes -->
     <div class="recipe-list">
         {% for object in object_list %}
         <div class="recipe-item">
@@ -39,9 +50,55 @@
         {% endfor %}
     </div>
 
+    <!-- Display the charts -->
+    {% if chart_image %}
     <div class="chart-container">
-    <img id="recipe-chart" src="" alt="Recipe Chart">
+    <img
+        src="data:image/png;base64,{{ chart_image | safe }}"
+        alt="Chart"
+        class="rounded-chart"
+    />
     </div>
+    {% endif %}
+    <!-- Display the error message -->
+    {% if error_message %}
+    <div class="alert alert-error">{{ error_message }}</div>
+    {% endif %}
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="pagination">
+      <span class="page-links">
+        {% if page_obj.has_previous %}
+        <button type="button" onclick="location.href='?page=1'">First</button>
+        <button
+          type="button"
+          onclick="location.href='?page={{ page_obj.previous_page_number }}'"
+        >
+          Previous
+        </button>
+        {% endif %} {% if page_obj.has_next %}
+        <button
+          type="button"
+          onclick="location.href='?page={{ page_obj.next_page_number }}'"
+        >
+          Next
+        </button>
+        <button
+          type="button"
+          onclick="location.href='?page={{ page_obj.paginator.num_pages }}'"
+        >
+          Last
+        </button>
+        {% endif %}
+      </span>
+    </div>
+    <div class="pagination-info">
+      <span class="page-info">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+    </div>
+    {% endif %}
 
     <style>
         body {
@@ -247,6 +304,19 @@
             background-color: #0056b3;
         }
 
+        .chart-container {
+            text-align: center;
+            margin: 20px; /* Adjust the margin as needed */
+        }
+
+        /* Style the chart image */
+        .rounded-chart {
+            max-width: 100%; /* Adjust the maximum width as needed */
+            max-height: 400px; /* Adjust the maximum height as needed */
+            display: block;
+            margin: 0 auto; /* Center the chart horizontally */
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+        }
         ::-webkit-scrollbar {
             width: 10px; /* Set the width of the scrollbar */
         }
@@ -262,50 +332,23 @@
 
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Function to update the chart image
-        function updateChartImage(chartData) {
-            var chartImage = chartData.chart_image;
-            document.getElementById("recipe-chart").src = "data:image/png;base64," + chartImage;
-        }
-
-        // Event handler for the Clear button
-        $("#clear-search").click(function() {
-            // Clear the form fields
-            $("#id_search_text").val("");
-            $("#id_Recipe_Name").val("");
-            $("#id_Ingredients").val([]);
-            $("#id_chart_type").val("");  // Clear the chart_type field
-
-            // Clear the chart by setting an empty src attribute
-            $("#recipe-chart").attr("src", "");
-
-            // Submit the form to refresh the recipe list
-            $("form").submit();
-        });
-
-        // Event handler for form submission
-        $("form").submit(function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Perform an AJAX request to the generate-chart view
-            $.ajax({
-                url: "{% url 'recipes:generate_chart' %}",
-                type: "GET",
-                data: $(this).serialize(),
-                dataType: "json",
-                success: function(data) {
-                    // Call the function to update the chart image
-                    updateChartImage(data);
-                },
-                error: function(error) {
-                    console.log("Error:", error);
-                }
+    <script>
+        $(document).ready(function () {
+            $("#clear-search").click(function () {
+                // Clear the form fields
+                $("#id_Recipe_Name").val("");
+                $("#id_Ingredients").val([]).trigger("change");  // Clear the Ingredients field
+                $("#id_chart_type").val("");  // Clear the chart_type field
+                // Clear the chart by setting an empty src attribute
+                $("#recipe-chart").attr("src", "");
+                // Submit the form to refresh the recipe list
+                $("form").submit();
             });
         });
-    });
-</script>
 
+    </script>
+
+
+</div>
 </body>
 </html>
