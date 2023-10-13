@@ -403,3 +403,287 @@ user can log back in<br>
 
 <!--------------------------------------------------------------------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+<details>
+<summary><h2>Data Analysis and Visualization</h2></summary>
+
+<h2> 1. Implement Search for Recipes </h2>
+
+• Create a user form to allow your user to input the search criteria.
+```
+# src/recipes/forms.py
+
+class RecipeSearchForm(forms.Form):
+    search_text = forms.CharField(
+        required=False,
+        max_length=100,
+        label="Search",
+        widget=forms.TextInput(
+            attrs={"class": "form-item", "placeholder": "Enter a Recipe Name or Ingredient"}
+        ),
+    )
+    Ingredients = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=Ingredient.objects.all(),
+        label="Ingredient(s)",
+        widget=forms.SelectMultiple(attrs={"class": "form-item"}),
+    )
+    selected_ingredient = forms.ModelChoiceField(
+        required=False,
+        queryset=Ingredient.objects.all(),
+        label="Select Ingredient",
+        empty_label="All Ingredients",
+        widget=forms.Select(attrs={"class": "form-item"}),
+    )
+```
+
+•	Extract the data as QuerySet using the search criteria.
+
+```
+# src/recipes/views.py
+
+class RecipesListView(LoginRequiredMixin, ListView):
+    model = Recipe
+    template_name = "recipes/recipes_list.html"
+    context_object_name = "recipes"
+    paginate_by = 12
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        recipe_name = self.request.GET.get("Recipe_Name")
+        ingredients = self.request.GET.getlist("Ingredients")
+        selected_ingredient = self.request.GET.get("selected_ingredient")
+
+        if recipe_name:
+            queryset = queryset.filter(name__icontains=recipe_name)
+
+        if ingredients:
+            ingredient_query = Q()
+            for ingredient_id in ingredients:
+                ingredient_query |= Q(ingredients__id=ingredient_id)
+            queryset = queryset.filter(ingredient_query)
+
+        # Include selected ingredient in the filter
+        if selected_ingredient:
+            queryset = queryset.filter(ingredients__id=selected_ingredient)
+
+        return queryset
+```
+•	Convert the QuerySet to pandas DataFrames (Ensure you have pandas installed).
+```
+# src/recipes/views.py
+
+class RecipesListView(LoginRequiredMixin, ListView):
+
+  # previous code
+
+  def get_context_data(self, **kwargs):
+          context = super().get_context_data(**kwargs)
+  
+          try:
+              # Convert the QuerySet to a pandas DataFrame
+              df = pd.DataFrame.from_records(context["recipes"].values())
+              context["recipes_df"] = df
+  
+              context["form"] = RecipeSearchForm(self.request.GET)
+```
+
+•	Display search results as a table.
+```
+# src/recipes/views.py
+
+class RecipesListView(LoginRequiredMixin, ListView):
+
+  # previous code
+
+  def generate_chart(request):
+    chart_type = request.GET.get("chart_type")
+    recipe_name = request.GET.get("Recipe_Name")
+    ingredients = request.GET.getlist("Ingredients")
+
+    # Filter the Recipe objects based on the request parameters
+    queryset = Recipe.objects.all()
+
+    if recipe_name:
+        queryset = queryset.filter(name__icontains=recipe_name)
+
+    if ingredients:
+        for ingredient in ingredients:
+            # Check if the ingredient parameter is empty
+            if ingredient:
+                queryset = queryset.filter(ingredients__id=ingredient)
+
+    # Convert the filtered QuerySet to a list of dictionaries
+    recipe_data = list(queryset.values())
+
+    # Get the related Ingredient data for each recipe
+    for data in recipe_data:
+        recipe = Recipe.objects.get(pk=data["id"])
+        data["ingredients"] = ", ".join(
+            [ingredient.name for ingredient in recipe.ingredients.all()]
+        )
+
+    # Create the DataFrame from the list of dictionaries
+    df = pd.DataFrame.from_records(recipe_data)
+
+    chart_data = {"name": df["name"], "cooking_time": df["cooking_time"]}
+    if chart_type == "#1":
+        chart_data["labels"] = df["name"]
+    elif chart_type == "#2":
+        # For Pie Chart, labels should be the recipe names, and not the cooking times
+        chart_data["labels"] = df["name"]
+    else:
+        chart_data["labels"] = None
+
+    chart_image = get_chart(chart_type, chart_data)
+    return JsonResponse({"chart_image": chart_image})
+```
+•	Ensure that the recipes returned by the search criteria are clickable and lead to the details page of the recipe.
+
+```
+# src/recipes/templates/recipes/recipe_list.html
+
+ <!-- The list of recipes -->
+    <div class="recipe-list">
+        {% for object in object_list %}
+        <div class="recipe-item">
+            <a href="{{ object.get_absolute_url }}">
+                <div class="recipe-title">{{ object.name }}</div>
+                <img src="{{ object.pic.url }}" alt="{{ object.name }}" class="recipe-image">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+
+# src/recipes/models.py
+
+def get_absolute_url(self):
+        return reverse ("recipes:detail", kwargs={'pk': self.pk})
+```
+
+<h2>2. Implement Show-All Function</h2>
+Give users the ability to view all recipes without any search filter from the search criteria by clicking the "clear" button in the form. <br>
+The clear function removes the user's selection and resets the recipe list to the original view with all recipes present.
+
+```
+# src/recipes/templates/recipes/recipes_list.html
+
+<script>
+        $(document).ready(function () {
+            $("#clear-search").click(function () {
+                // Clear the form fields
+                $("#id_Recipe_Name").val("");
+                $("#id_Ingredients").val([]).trigger("change");  // Clear the Ingredients field
+                $("#id_chart_type").val("");  // Clear the chart_type field
+                // Clear the chart by setting an empty src attribute
+                $("#recipe-chart").attr("src", "");
+                // Submit the form to refresh the recipe list
+                $("form").submit();
+            });
+        });
+
+    </script>
+```
+
+<h2>3. Data Visualization</h2>
+
+1. Bar Chart (Horizontal Bar Chart):
+    -X-axis: Recipe Name
+    -Y-axis: Cooking Time
+
+<img src="./Exercise_2.7/screenshots/bar_chart.png" width="50%"> 
+
+3. Pie Chart:
+    - Percentage of time it takes to cook each recipe in comparison to each other
+
+<img src="./Exercise_2.7/screenshots/pie_chart.png" width="50%"> 
+
+5. Line Chart:
+    -X-axis: Recipe Name
+    -Y-axis: Cooking Time
+
+<img src="./Exercise_2.7/screenshots/line_chart.png" width="50%">
+
+
+<h2>4. Write Tests</h2>
+
+<img src="./Exercise_2.7/screenshots/tests.png" width="50%">
+
+```
+class RecipeSearchFormTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Create some test data for the Recipe and Ingredient models
+        ingredient1 = Ingredient.objects.create(name="Ingredient 1")
+        ingredient2 = Ingredient.objects.create(name="Ingredient 2")
+        recipe1 = Recipe.objects.create(id=1, name="Recipe 1", cooking_time=30)
+        recipe2 = Recipe.objects.create(id=2, name="Recipe 2", cooking_time=60)
+        recipe1.ingredients.add(ingredient1)
+        recipe2.ingredients.add(ingredient2)
+
+        # Create additional recipes
+        for i in range(3, 13):  # Creates 10 additional recipes with ids 3 to 12
+            recipe = Recipe.objects.create(
+                id=i, name=f"Recipe {i}", cooking_time=(i + 1) * 10
+            )
+            recipe.ingredients.add(ingredient1)
+            recipe.ingredients.add(ingredient2)
+
+    def setUp(self):
+        # Create a test user and log them in for the views requiring login
+        self.user = User.objects.create_user(
+            username="testuser", password="testpassword"
+        )
+        self.client.login(username="testuser", password="testpassword")
+
+    def test_form_fields(self):
+        form_data = {
+            "Recipe_Name": "Recipe 1",
+            "Ingredients": [1],
+            "chart_type": "#1",
+        }
+        form = RecipeSearchForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_recipe_list_view(self):
+        response = self.client.get("/recipes/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipes/recipes_list.html")
+
+    def test_chart_generation(self):
+        form_data = {
+            "Recipe_Name": "",
+            "Ingredients": [1],
+            "chart_type": "#1",
+        }
+        response = self.client.get("/recipes/", form_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("chart_image" in response.context)
+
+    def test_view_protected(self):
+        self.client.logout()
+        response = self.client.get("/recipes/")
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/login/?next=/recipes/")
+
+    def test_generate_chart_view(self):
+        form_data = {
+            "Recipe_Name": "",
+            "Ingredients": [1],
+            "chart_type": "#1",
+        }
+        response = self.client.get("/generate-chart/", form_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("chart_image" in response.json())
+```
+
+<h2>5. Execution Flow</h2>
+
+
+
+</details>
+
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------------------------------------->
