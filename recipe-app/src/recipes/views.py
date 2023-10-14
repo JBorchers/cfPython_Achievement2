@@ -82,7 +82,7 @@ class RecipesListView(LoginRequiredMixin, ListView):
         queryset = super().get_queryset()
         recipe_name = self.request.GET.get("Recipe_Name")
         ingredients = self.request.GET.getlist("Ingredients")
-        selected_ingredient = self.request.GET.get("selected_ingredient")  # Add this line
+        selected_ingredient = self.request.GET.get("selected_ingredient")
 
         if recipe_name:
             queryset = queryset.filter(name__icontains=recipe_name)

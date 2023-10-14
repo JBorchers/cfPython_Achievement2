@@ -12,7 +12,8 @@ urlpatterns = [
     path("recipes/export/", export_recipes_csv, name="export_csv"),
     path("generate-chart/", generate_chart, name="generate_chart"),
     path("recipes/", RecipesListView.as_view(), name="recipes_list"),
-    path("list/<pk>", RecipesDetailView.as_view(), name="detail")
+    path("list/<pk>", RecipesDetailView.as_view(), name="detail"),
+    path("about/", about_page, name="about"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
