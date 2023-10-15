@@ -26,10 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpe
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "desolate-meadow-45396-42aa33eddc2d.herokuapp.com",
-    ".vercel.app",
-    "127.0.0.1",
-    "localhost",
+    "*"
 ]
 
 
