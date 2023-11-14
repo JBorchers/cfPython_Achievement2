@@ -1,0 +1,50 @@
+Exercise 2.8: Deploying a Django Project
+Reflection Questions
+
+Explain how you can use CSS and JavaScript in your Django web application.
+
+In Django web applications, you have the flexibility to integrate CSS for styling and JavaScript for interactivity directly within your HTML templates or organize them in separate .css and .js files linked to the HTML. Moreover, Bootstrap was employed to seamlessly implement pre-built styles and components, enhancing the visual appeal of elements like cards on the recipes list view page.
+
+
+In your own words, explain the steps you’d need to take to deploy your Django web application. 
+
+I deployed my project on Heroku. In order to do so, one would need to follow these steps:
+
+1.	Sign up for a Heroku account
+2.	Install the Heroku Command Line Interface (CLI) on your machine.
+3.	Open your terminal and log in to Heroku using the command: `heroku login`
+4.	In the project directory, create a new Heroku app with: `heroku create`
+5.	Add the Heroku Postgres add-on for the production database: ` heroku addons:create heroku-postgresql:hobby-dev`
+6.	Update Database Configuration:
+a.	In your Heroku app dashboard, navigate to "Settings" and click on "Reveal Config Vars."
+b.	Add the necessary environment variables, such as DATABASE_URL.
+7.	Ensure your requirements.txt file includes any additional dependencies required for deployment.
+8.	Create a file named Procfile in your project root directory and specify the command to run your app: `web: gunicorn your_project_name.wsgi`
+9.	Commit changes to Github
+10.	Commit changes to Heroku: `git push heroku main`
+11.	Run migrations: ` heroku run python manage.py migrate`
+12.	Open the app either through the Heroku UI or by running `heroku open`
+13.	Check Heroku logs for any errors by running: `heroku logs --tail`
+
+
+You’ve now finished Achievement 2 and, with it, the whole course! Take a moment to reflect on your learning:
+
+1. What went well during this Achievement? 
+
+Building out each of the features in my app went pretty well. It wasn’t a smooth process, but the end result was effective and meaningful components within my Django app. I was able to get all of the views/templates to be exactly how I wanted, such as the form to add new recipes, the details view of individual recipes, and the list view of all recipes along with functionality to filter through all of the items. It was pretty rewarding to get everything that was in my head into my app.
+
+
+2. What’s something you’re proud of? 
+
+I’m ultimately proud of how my final project turned out. I spent a lot of time on trying to make it user friendly and aesthetically pleasing, and I think it turned out pretty user friendly and pretty.
+
+
+3. What was the most challenging aspect of this Achievement? 
+
+Deploying my project was the most challenging and frustrating part of this achievement. I seemed to have been running into DB connectivity issues that took more time to resolve than any other task in the course. Another challenging part of the achievement was all f the documentation and updates to the README files. I know that this comes with the territory of development, but I did spend a lot more time documenting my work and answering questions than I did actual coding.
+
+
+4. Did this Achievement meet your expectations? Did it give you the confidence to start working with your new Django skills?
+
+I didn’t really know what to expect going into this achievement, but I would say it’s really upped my confidence to work more with Django. I seemed to run into errors consistently and the overall development of my project was anything but smooth and seamless, which admittedly is the best way that I learn. Though it was frustrating at times, I would not have learned as much about Django had I not had to do so much troubleshooting. 
+
